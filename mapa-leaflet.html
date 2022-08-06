@@ -1,0 +1,140 @@
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+    <title>Document</title>
+    <style>
+        #map { 
+          width: 100%;
+          height: 500px;
+          
+       }
+
+       body { 
+         
+          height: 100%;
+          margin:0;
+          padding: 0;
+          
+       }
+      </style>
+
+    <div id="map"></div>
+
+
+
+    <script>
+
+var geoJson = [{
+  "type": "Feature",
+  "properties": {
+
+          name: "Pádel Táctica Paterna",
+          url: 'http://www.padeltacticapaterna.com/',
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [-0.4624824231189226, 39.52497064327903]
+  }
+},{
+  "type": "Feature",
+  "properties": {
+
+          name: "Pádel Elite 22",
+          url: 'https://padelelite22.matchpoint.com.es/',
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [ -0.4703105736009598, 39.517287725349114]
+  }
+},{
+  "type": "Feature",
+  "properties": {
+
+          name: "SUMA Padel Alfafar",
+          url: 'https://www.sumapadelalfafar.com/',
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [ -0.3905718127869266, 39.420930926971074]
+  }
+},{
+  "type": "Feature",
+  "properties": {
+
+          name: "FLOW PÁDEL CLUB",
+          url: 'http://www.flowpadelclub.es',
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [ -0.4644638264256517, 39.52328628819015]
+  }
+},{
+  "type": "Feature",
+  "properties": {
+    name: "SPORTCITY",
+    url: "https://www.sportcityvalencia.com/",
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [ -0.38831546073235435, 39.41692012685905,
+      ]
+  }
+},{
+  "type": "Feature",
+  "properties": {
+
+    name: "PÁDEL SEDAVÍ",
+    url: "http://www.padelsedavi.com/",
+        
+  },
+  "geometry": {
+      "type": "Point",
+      "coordinates": [ -0.38467082646453954, 39.4354463876979]
+  }
+}];
+
+
+
+
+var map = L.map('map').setView([39.479260506629686, -0.3751149835716945], 12);
+
+var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var baseballIcon = L.icon({
+  iconUrl: 'https://clubsdepadelvalencia.es/wp-content/uploads/2022/07/padel-3.png',
+  iconSize: [32, 37],
+  iconAnchor: [16, 37],
+  popupAnchor: [0, -28]
+});
+
+function onEachFeature(feature, layer, url) {
+  var popupContent = `<h3 class="text-2xl font-bold text-gray-900">${feature.properties.name}</h3><p><a style="color:#658529;font-weight:bold" href="${feature.properties.url}">${feature.properties.url}</a></p>`;
+  
+
+  layer.bindPopup(popupContent);
+  console.log(popupContent)
+}
+
+
+var coorsLayer = L.geoJSON(geoJson, {
+
+  pointToLayer: function (feature, latlng) {
+    return L.marker(latlng, {icon: baseballIcon});
+  },
+
+  onEachFeature: onEachFeature
+}).addTo(map);
+
+
+
+
+
+</script>
